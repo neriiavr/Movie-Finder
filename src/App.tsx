@@ -1,24 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import Home from './pages/home';
+import BackgroundImage from '../src/bg.jpeg'
+
 import './App.css';
+import { useState } from 'react';
+import DetailPage from './pages/detail';
 
 function App() {
+  const [movie, setMovie] = useState({});
+
+  const handleShowMovieDetailPage = (movieData: {}) => {
+    setMovie(movieData)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <img src={BackgroundImage} style={{
+        zIndex: -1,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        width: '100vw',
+        height: '100vh',
+        filter: 'blur(2px)'
+      }} />
+      <Home onSearch={handleShowMovieDetailPage} />
+
+      {/* @ts-ignore */}
+      {movie && movie.Title && (
+        // @ts-ignore
+        <DetailPage movie={movie} />
+      )}
     </div>
   );
 }
